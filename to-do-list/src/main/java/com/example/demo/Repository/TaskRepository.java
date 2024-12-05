@@ -54,5 +54,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByClient(User client, Pageable pageable);
 
+    @Query("SELECT t FROM Task t WHERE t.client.id = :userId AND LOWER(t.title) LIKE LOWER(CONCAT('%', :taskName, '%'))")
+    List<Task> findTasksByNameLike(@Param("userId") Long userId, @Param("taskName") String taskName);
+
+
 
 }
